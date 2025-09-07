@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Krionis — Local AI Knowledge Engine</title>
+  <meta name="description" content="Krionis: local-first, multimodal RAG with an orchestrator and pipeline built for secure, offline AI in GPU-poor environments.">
+  <style>
+    :root{
+      --fg:#0a0a0a;
+      --muted:#555;
+      --bg:#ffffff;
+      --border:#eee;
+      --maxw: 980px;
+    }
+    html,body{background:#fff;margin:0;padding:0;color:var(--fg);}
+    body{
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, Inter, InterVariable, "Segoe UI", Roboto, Ubuntu, "Noto Sans", sans-serif;
+      line-height: 1.6;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .container{max-width:var(--maxw); margin:0 auto; padding: 0 28px;}
+    header{padding:52px 0 28px; border-bottom:1px solid var(--border);}
+    header .brand{display:flex; align-items:center; gap:18px;}
+    header img{height:56px; width:auto;}
+    header h1{font-weight:700; margin:0; font-size:28px; letter-spacing:.2px;}
+    nav{margin-top:10px;}
+    nav a{color:#000; text-decoration:none; margin-right:18px; opacity:.75}
+    nav a:hover{opacity:1}
+    .hero{padding:48px 0 12px;}
+    .hero h2{font-size:44px; line-height:1.15; margin:16px 0 12px; font-weight:750; letter-spacing:-.2px;}
+    .hero p.lead{font-size:20px; color:var(--muted); max-width:820px; margin: 10px 0 18px;}
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+    .btn{display:inline-block; padding:12px 18px; border-radius:12px; border:1px solid var(--border); text-decoration:none; color:#000; font-weight:600;}
+    .btn.primary{background:#000; color:#fff; border-color:#000;}
+    .btn.ghost{background:#fff; color:#000;}
+    .badges{display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;}
+    .pill{display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid var(--border); margin:4px 6px 0 0; font-size:14px; color:#222;}
+    section{padding:56px 0; border-top:1px solid var(--border);}
+    section h3{font-size:28px; margin:0 0 12px;}
+    .kgrid{display:grid; grid-template-columns: repeat(12, 1fr); gap:18px;}
+    .col-6{grid-column: span 6;}
+    .col-4{grid-column: span 4;}
+    .card{border:1px solid var(--border); border-radius:16px; padding:18px;}
+    .muted{color:var(--muted);}
+    code, pre{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 14px; background:#fafafa; border:1px solid #eee;}
+    pre{padding:16px; border-radius:14px; overflow:auto;}
+    .footnote{font-size:14px; color:var(--muted);}
+    .list{padding-left:18px;}
+    .list li{margin:6px 0;}
+    footer{padding:48px 0 72px; border-top:1px solid var(--border);}
+    @media(max-width:900px){
+      .col-6, .col-4{grid-column: span 12;}
+      .hero h2{font-size:36px;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="brand">
+        <img src="assets/img/KrionisLogo.png" alt="Krionis logo">
+        <h1>KRIONIS</h1>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#quickstart">Quick Start</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#design">Design Choices</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Top emphasis: simple install + PyPI -->
+    <section class="hero" id="about">
+      <h2>Local AI Knowledge Engine for secure, offline environments</h2>
+      <p class="lead">
+        Krionis delivers multimodal Retrieval-Augmented Generation (RAG) that runs locally.
+        Two parts work together: the <strong>Pipeline</strong> for instant agents and the
+        <strong>Orchestrator</strong> for massive local scale.
+      </p>
+      <div class="badges">
+        <a class="btn primary" href="#quickstart">Install in seconds</a>
+        <a class="btn ghost" href="https://pypi.org/project/krionis-orchestrator/" target="_blank" rel="noopener">PyPI: Orchestrator</a>
+        <a class="btn ghost" href="https://pypi.org/project/krionis-pipeline/" target="_blank" rel="noopener">PyPI: Pipeline</a>
+      </div>
+    </section>
+
+    <section id="quickstart">
+      <h3>Quick Start — Orchestrator</h3>
+      <p class="muted">Install from PyPI, prepare a shared working directory (<code>config/system.yaml</code>, <code>data/manual/</code>), and run as a local service.</p>
+      <div class="kgrid">
+        <div class="col-6">
+<pre><code># 1) Install
+pip install krionis-orchestrator
+
+# 2) Prepare working directory
+config/system.yaml   # system + model config
+data/manual/         # curated manuals / docs / PDFs
+
+# 3) Start the service
+krionis-orchestrator start --host 0.0.0.0 --port 8080
+
+# 4) Manage
+krionis-orchestrator status
+krionis-orchestrator stop
+krionis-orchestrator restart
+</code></pre>
+          <p class="footnote">
+            Dev mode: <code>krionis-orchestrator dev --host 127.0.0.1 --port 8080</code>
+          </p>
+        </div>
+        <div class="col-6">
+          <div class="card">
+            <strong>What you get immediately</strong>
+            <ul class="list">
+              <li>Scheduling, batching & micro-batching for multi-user throughput</li>
+              <li>Built-in agents (retriever, compressor, reranker, drafting, validator, dialogue, coordinator)</li>
+              <li>REST API and minimal Web UI</li>
+              <li>Fully offline after setup</li>
+            </ul>
+            <p><a href="https://pypi.org/project/krionis-orchestrator/" target="_blank" rel="noopener">View on PyPI →</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <h3>High-level Capabilities</h3>
+      <div class="kgrid">
+        <div class="col-4 card">
+          <h4>Local-first RAG</h4>
+          <p>Embed and index with FAISS/HNSW; retrieve context and generate grounded answers entirely on your machines.</p>
+          <div class="pill">FAISS</div><div class="pill">HNSW</div><div class="pill">SentenceTransformers</div>
+        </div>
+        <div class="col-4 card">
+          <h4>Multimodal</h4>
+          <p>Ingest PDFs, text, images (OCR), audio, and video; query via one interface.</p>
+          <div class="pill">PDF</div><div class="pill">OCR</div><div class="pill">Audio</div><div class="pill">Video</div>
+        </div>
+        <div class="col-4 card">
+          <h4>Flexible Models</h4>
+          <p>Run open models (Qwen, Mistral, LLaMA, etc.) with YAML-controlled precision (fp32/fp16/bf16).</p>
+          <div class="pill">Local LLMs</div><div class="pill">Quantization</div><div class="pill">Hugging Face</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="design">
+      <h3>Design Choices (why Krionis feels fast & practical)</h3>
+      <div class="kgrid">
+        <div class="col-6 card">
+          <h4>Pipeline — instant agent with telemetry</h4>
+          <ul class="list">
+            <li><strong>Immediate utility:</strong> one install gives you a ready-to-use agent that searches, retrieves, and answers.</li>
+            <li><strong>Observability-first:</strong> built-in telemetry for retrieval quality, latency, and model behavior.</li>
+            <li><strong>Safe defaults:</strong> sensible chunking, indexing, and reranking out of the box.</li>
+            <li><strong>Swappable pieces:</strong> embeddings, rerankers, and LLMs are pluggable via YAML.</li>
+          </ul>
+          <p class="footnote"><a href="https://pypi.org/project/krionis-pipeline/" target="_blank" rel="noopener">PyPI: krionis-pipeline →</a></p>
+        </div>
+        <div class="col-6 card">
+          <h4>Orchestrator — massive scale, locally</h4>
+          <ul class="list">
+            <li><strong>Throughput by design:</strong> batching/micro-batching + queueing for high concurrency on modest hardware.</li>
+            <li><strong>Agent runtime:</strong> compose multi-step chains (retrieval → drafting → validation) with backpressure.</li>
+            <li><strong>Resilience:</strong> timeouts, retries, and cancellation primitives built in.</li>
+            <li><strong>Interfaces:</strong> REST API + minimal Web UI for operators.</li>
+          </ul>
+          <p class="footnote"><a href="https://pypi.org/project/krionis-orchestrator/" target="_blank" rel="noopener">PyPI: krionis-orchestrator →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <h3>Architecture (at a glance)</h3>
+      <div class="kgrid">
+        <div class="col-6">
+<pre><code>config/system.yaml   # system + model configuration
+data/manual/         # curated knowledge base
+</code></pre>
+          <p>Pipeline builds indexes and handles retrieval. Orchestrator layers scheduling, batching, and agent coordination on top — all local.</p>
+        </div>
+        <div class="col-6">
+          <p><strong>Interfaces</strong></p>
+          <ul class="list">
+            <li>CLI tools for operators</li>
+            <li>REST API for integrations</li>
+            <li>Lightweight Web UI for monitoring and control</li>
+          </ul>
+          <p class="muted">After initial model setup, no external calls are required — suitable for air-gapped and regulated environments.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h3>FAQ</h3>
+      <div class="kgrid">
+        <div class="col-6">
+          <p><strong>Does Krionis require a GPU?</strong><br>
+          No. It is designed for GPU-poor environments. If present, GPUs accelerate inference; CPUs are sufficient for many use cases.</p>
+          <p><strong>Can I use my own models?</strong><br>
+          Yes. Select models and precision in YAML; swap in open-source LLMs and embedding models.</p>
+        </div>
+        <div class="col-6">
+          <p><strong>Does it call external APIs?</strong><br>
+          No. After setup, Krionis runs fully offline.</p>
+          <p><strong>How do I start building?</strong><br>
+          Install the Pipeline to get an immediate agent with telemetry, then add the Orchestrator when you need multi-user scale.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p class="muted">© <span id="year"></span> Krionis. Local-first AI Knowledge Engine.</p>
+      </div>
+    </footer>
+  </main>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
+</body>
+</html>
