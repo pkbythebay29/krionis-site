@@ -93,7 +93,7 @@
 
     <section id="quickstart">
       <h3>Quick Start — Orchestrator</h3>
-      <p class="muted">Install from PyPI, prepare a shared working directory (<code>config/system.yaml</code>, <code>data/manual/</code>), and run as a local service.</p>
+      <p class="muted">Install from PyPI, prepare a shared working directory (<code>config/system.yaml</code>, <code>data/manuals/</code>), and run as a local service.</p>
       <div class="kgrid">
         <div class="col-6">
 <pre><code># 1) Install
@@ -101,7 +101,7 @@ pip install krionis-orchestrator
 
 # 2) Prepare working directory
 config/system.yaml   # system + model config
-data/manual/         # curated manuals / docs / PDFs
+data/manuals/         # curated manuals / docs / PDFs
 
 # 3) Start the service
 krionis-orchestrator start --host 0.0.0.0 --port 8080
@@ -182,7 +182,7 @@ krionis-orchestrator restart
       <div class="kgrid">
         <div class="col-6">
 <pre><code>config/system.yaml   # system + model configuration
-data/manual/         # curated knowledge base
+data/manuals/         # curated knowledge base
 </code></pre>
           <p>Pipeline builds indexes and handles retrieval. Orchestrator layers scheduling, batching, and agent coordination on top — all local.</p>
         </div>
